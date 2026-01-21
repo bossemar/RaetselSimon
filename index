@@ -1,3 +1,51 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Rätselspiel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Rätselspiel</h1>
+<div id="progress">Gelöst: 0 / 4</div>
+
+<div id="game">
+  <div id="player"></div>
+</div>
+
+<!-- Touch-Steuerung -->
+<div id="controls">
+  <button data-dir="up">▲</button>
+  <div>
+    <button data-dir="left">◀</button>
+    <button data-dir="down">▼</button>
+    <button data-dir="right">▶</button>
+  </div>
+</div>
+
+<!-- Dialog -->
+<div id="dialog" class="hidden">
+  <div id="speechbubble">
+    <p id="dialogText"></p>
+    <input type="text" id="answer" placeholder="Antwort eingeben">
+    <button id="submit">OK</button>
+  </div>
+</div>
+
+<!-- Endscreen -->
+<div id="end" class="hidden">
+  <div class="endbox">
+    <h2>🎉 Geschafft!</h2>
+    <p>Alle Rätsel wurden gelöst.</p>
+  </div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
+
 <div id="dialog" class="hidden">
   <div id="speechbubble">
     <p id="dialogText"></p>
