@@ -1,0 +1,77 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #1e1e1e;
+  color: white;
+  text-align: center;
+}
+
+#game {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  margin: 20px auto;
+  background: #444;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+}
+
+#player, .object {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+}
+
+#player {
+  background: gold;
+}
+
+.object {
+  background: steelblue;
+}
+
+#progress {
+  margin-top: 10px;
+}
+
+#dialog, #end {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hidden {
+  display: none;
+}
+
+#speechbubble, .endbox {
+  background: white;
+  color: black;
+  padding: 20px;
+  border-radius: 12px;
+  width: 280px;
+}
+
+#controls {
+  margin-top: 10px;
+}
+
+#controls button {
+  font-size: 20px;
+  padding: 10px 20px;
+  margin: 5px;
+}
+#answer {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+#feedback {
+  margin-top: 10px;
+  font-weight: bold;
+}
