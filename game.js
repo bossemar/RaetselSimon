@@ -7,14 +7,14 @@ let solvedCount = 0;
 const sounds = {
   move: new Audio("sounds/move.wav"),
   correct: new Audio("sounds/correct.wav"),
-  wrong: new Audio("sounds/wrong.wav")
+  wrong: new Audio("sounds/wrong.mp3")
 };
 
 const objects = [
-  { x: 2, y: 2, riddle: "TCAH", solution: "CHAT", solved: false },
-  { x: 7, y: 1, riddle: "Was wird nass beim Trocknen?", solution: "HANDTUCH", solved: false },
-  { x: 4, y: 6, riddle: "BUCHSTABENSALAT: RTEOW", solution: "WORTE", solved: false },
-  { x: 8, y: 8, riddle: "Ich habe Schlüssel, aber keine Schlösser.", solution: "TASTATUR", solved: false }
+  { x: 2, y: 2, riddle: "senlleWs", solution: "Wellness", solved: false },
+  { x: 7, y: 1, riddle: "Was wird nass beim Trocknen?", solution: "Handtuch", solved: false },
+  { x: 4, y: 6, riddle: "BUCHSTABENSALAT: GRBUMAH", solution: "Hamburg", solved: false },
+  { x: 8, y: 8, riddle: "Mich kannst du trinken, ich bin aber sehr alt.", solution: "Wein", solved: false }
 ];
 
 const game = document.getElementById("game");
