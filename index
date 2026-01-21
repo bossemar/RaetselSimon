@@ -1,0 +1,16 @@
+<div id="dialog" class="hidden">
+  <div id="speechbubble">
+    <p id="dialogText"></p>
+
+    <input
+      type="text"
+      id="answer"
+      placeholder="Antwort hier eingeben"
+      autocomplete="off"
+    >
+
+    <p id="feedback"></p>
+
+    <button id="submit">OK</button>
+  </div>
+</div>
