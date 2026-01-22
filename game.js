@@ -16,7 +16,7 @@ let currentRiddle = null;
 const riddles = [
     { text: "Ich werde nass, wenn ich trockne - was bin ich?", solution: "Handtuch" },
     { text: "Buchstabensalat: RGUBMHA ", solution: "Hamburg" },
-    { text: "Ich bin alt, aber mich kann man trinken – was bin ich?", solution: "" },
+    { text: "Ich bin alt, aber mich kann man trinken – was bin ich?", solution: "Wein" },
     { text: "Buchstabensalat - LSENLEWS", solution: "Wellness" }
 ];
 
