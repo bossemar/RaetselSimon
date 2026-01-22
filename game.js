@@ -2,6 +2,13 @@
 const canvas = document.getElementById('game-canvas');
 const ctx = canvas.getContext('2d');
 
+//NEU
+const dialog = document.getElementById("dialog");
+const dialogText = document.getElementById("dialog-text");
+const answersDiv = document.getElementById("answers");
+//NEU
+
+
 const startScreen = document.getElementById('start-screen');
 const gameScreen = document.getElementById('game-screen');
 const endScreen = document.getElementById('end-screen');
@@ -16,11 +23,17 @@ const gridSize = 10;
 // Spielfigur
 let player = { x: 0, y: 0 };
 
+//NEU
+let solvedCount = 0;
+let dialogOpen = false;
+
 // Objekte mit Positionen
-let objects = [
+const objects = [
     {x: 2, y: 3, solved: false, text: "Buchstabensalat: RGUBMHA ", answer: "Hamburg"},
     {x: 7, y: 1, solved: false, text: "Ich werde nass, wenn ich trockne - was bin ich?", answer: "Handtuch"},
-    {x: 4, y: 8, solved: false, text: "Was ist 5 + 3?", answer: "8"},
+    {x: 4, y: 8, solved: false, fading: false, question: "Welche der folgenden Eigenschaften beschreibt am besten einen typischen, trockenen Riesling aus Deutschland?",
+                 answer: [["A: Schwere, buttrige Noten mit wenig Säure", "B: Leichte, knackige Säure mit Aromen von grünen Äpfeln und Zitrusfrüchten", 
+                           "C: Dunkle Beerenaromen und Tannine", "D: Süße Süßweinaromen und Rosinen"], correct: 2},
     {x: 9, y: 6, solved: false, text: "Buchstabensalat - LSENLEWS", answer: "Wellness"}
 ];
 
@@ -29,106 +42,128 @@ const moveSound = new Audio('sounds/move.wav');
 const correctSound = new Audio('sounds/correct.wav');
 const wrongSound = new Audio('sounds/wrong.mp3');
 
-// Fortschritt
-let solvedCount = 0;
+document.getElementById("start-btn").onclick = () => {
+    startScreen.classList.add("hidden");
+    gameScreen.classList.remove("hidden");
+    draw();
+};
 
-// ---------- Event-Listener ----------
-startBtn.addEventListener('click', () => {
-    startScreen.classList.add('hidden');
-    gameScreen.classList.remove('hidden');
-    drawGame();
+document.getElementById("restart-btn").onclick = () => location.reload();
+
+// ---------- Steuerung ----------
+document.addEventListener("keydown", e => {
+    if (dialogOpen) return;
+
+    const moves = {
+        ArrowUp: [0, -1],
+        ArrowDown: [0, 1],
+        ArrowLeft: [-1, 0],
+        ArrowRight: [1, 0]
+    };
+
+    if (moves[e.key]) move(...moves[e.key]);
 });
 
-restartBtn.addEventListener('click', () => {
-    location.reload();
-});
-
-document.addEventListener('keydown', (e) => {
-    if(gameScreen.classList.contains('hidden')) return;
-
-    switch(e.key) {
-        case 'ArrowUp': move(0, -1); break;
-        case 'ArrowDown': move(0, 1); break;
-        case 'ArrowLeft': move(-1, 0); break;
-        case 'ArrowRight': move(1, 0); break;
-    }
-});
-
-// Touch-Buttons
-document.querySelectorAll('#touch-controls button').forEach(btn => {
-    btn.addEventListener('click', () => {
+document.querySelectorAll("#touch-controls button").forEach(btn => {
+    btn.onclick = () => {
+        if (dialogOpen) return;
         const dir = btn.dataset.dir;
-        switch(dir) {
-            case 'up': move(0, -1); break;
-            case 'down': move(0, 1); break;
-            case 'left': move(-1, 0); break;
-            case 'right': move(1, 0); break;
-        }
-    });
+        move(
+            dir === "left" ? -1 : dir === "right" ? 1 : 0,
+            dir === "up" ? -1 : dir === "down" ? 1 : 0
+        );
+    };
 });
 
 // ---------- Spiellogik ----------
 function move(dx, dy) {
-    const newX = player.x + dx;
-    const newY = player.y + dy;
+    const nx = player.x + dx;
+    const ny = player.y + dy;
 
-    if(newX >=0 && newX < gridSize && newY >=0 && newY < gridSize){
-        player.x = newX;
-        player.y = newY;
-        moveSound.play();
-        drawGame();
-        checkObject();
-    }
-}
+    if (nx < 0 || ny < 0 || nx >= gridSize || ny >= gridSize) return;
 
-function drawGame() {
-    ctx.clearRect(0,0,canvas.width, canvas.height);
-
-    // Raster
-    ctx.strokeStyle = "#ccc";
-    for(let i=0;i<=gridSize;i++){
-        ctx.beginPath();
-        ctx.moveTo(i*tileSize,0);
-        ctx.lineTo(i*tileSize,gridSize*tileSize);
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.moveTo(0,i*tileSize);
-        ctx.lineTo(gridSize*tileSize,i*tileSize);
-        ctx.stroke();
-    }
-
-    // Objekte
-    objects.forEach(obj => {
-        if(!obj.solved){
-            ctx.fillStyle = "orange";
-            ctx.fillRect(obj.x*tileSize, obj.y*tileSize, tileSize, tileSize);
-        }
-    });
-
-    // Spielfigur
-    ctx.fillStyle = "blue";
-    ctx.fillRect(player.x*tileSize, player.y*tileSize, tileSize, tileSize);
-
-    // Fortschritt
-    progressEl.textContent = `Rätsel ${solvedCount}/${objects.length} geschafft`;
+    player.x = nx;
+    player.y = ny;
+    moveSound.play();
+    draw();
+    checkObject();
 }
 
 function checkObject() {
     const obj = objects.find(o => !o.solved && o.x === player.x && o.y === player.y);
-    if(obj){
-        const userAnswer = prompt(obj.text); // Eingabe nur bei Dialog
-        if(userAnswer && userAnswer.trim().toUpperCase() === obj.answer.toUpperCase()){
-            correctSound.play();
-            obj.solved = true;
-            solvedCount++;
-            drawGame();
-            if(solvedCount === objects.length){
-                gameScreen.classList.add('hidden');
-                endScreen.classList.remove('hidden');
-            }
-        } else {
-            wrongSound.play();
-        }
+    if (obj) openDialog(obj);
+}
+
+function openDialog(obj) {
+    dialogOpen = true;
+    dialog.classList.remove("hidden");
+    dialogText.textContent = obj.question;
+    answersDiv.innerHTML = "";
+
+    obj.answers.forEach((answer, index) => {
+        const btn = document.createElement("button");
+        btn.textContent = answer;
+        btn.onclick = () => checkAnswer(obj, index);
+        answersDiv.appendChild(btn);
+    });
+}
+
+function checkAnswer(obj, index) {
+    if (index === obj.correct) {
+        correctSound.play();
+        obj.solved = true;
+        obj.fading = true;
+        solvedCount++;
+        setTimeout(() => obj.fading = false, 600);
+    } else {
+        wrongSound.play();
     }
+
+    closeDialog();
+    draw();
+
+    if (solvedCount === objects.length) {
+        gameScreen.classList.add("hidden");
+        endScreen.classList.remove("hidden");
+    }
+}
+
+function closeDialog() {
+    dialogOpen = false;
+    dialog.classList.add("hidden");
+}
+
+// ---------- Rendering ----------
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Raster
+    ctx.strokeStyle = "#ccc";
+    for (let i = 0; i <= gridSize; i++) {
+        ctx.beginPath();
+        ctx.moveTo(i * tileSize, 0);
+        ctx.lineTo(i * tileSize, gridSize * tileSize);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(0, i * tileSize);
+        ctx.lineTo(gridSize * tileSize, i * tileSize);
+        ctx.stroke();
+    }
+
+    // Objekte
+    objects.forEach(o => {
+        if (!o.solved || o.fading) {
+            ctx.globalAlpha = o.fading ? 0.4 : 1;
+            ctx.fillStyle = "orange";
+            ctx.fillRect(o.x * tileSize, o.y * tileSize, tileSize, tileSize);
+            ctx.globalAlpha = 1;
+        }
+    });
+
+    // Spieler
+    ctx.fillStyle = "blue";
+    ctx.fillRect(player.x * tileSize, player.y * tileSize, tileSize, tileSize);
+
+    progressEl.textContent = `Rätsel ${solvedCount}/${objects.length} geschafft`;
 }
