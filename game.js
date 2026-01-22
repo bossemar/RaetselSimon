@@ -204,12 +204,10 @@ for (let i = 0; i <= gridSize; i++) {
         );
         ctx.globalAlpha = 1;
     }
-});
-
-            ctx.globalAlpha = 1;
-        }
-    });
-
+});         
+}
+    }
+                    };
     // Spieler
 ctx.fillStyle = "blue";
 ctx.fillRect(player.x * tileSize, player.y * tileSize, tileSize, tileSize);
