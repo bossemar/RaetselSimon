@@ -3,7 +3,9 @@ const images = {
     object1: new Image(),
     object2: new Image(),
     object3: new Image(),
-    object4: new Image()
+    object4: new Image(), 
+    map = new Image()
+
 };
 
 images.player.src = "images/player.png";
@@ -11,7 +13,7 @@ images.object1.src = "images/object1.png";
 images.object2.src = "images/object2.png";
 images.object3.src = "images/object3.png";
 images.object4.src = "images/object4.png";
-
+images.map.src = "images/map.png";
 
 const canvas = document.getElementById("game-canvas");
 const ctx = canvas.getContext("2d");
@@ -161,19 +163,16 @@ function closeDialog() {
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Raster
-    ctx.strokeStyle = "#ccc";
-    for (let i = 0; i <= gridSize; i++) {
-        ctx.beginPath();
-        ctx.moveTo(i * tileSize, 0);
-        ctx.lineTo(i * tileSize, gridSize * tileSize);
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.moveTo(0, i * tileSize);
-        ctx.lineTo(gridSize * tileSize, i * tileSize);
-        ctx.stroke();
-    }
+    // Karte (Hintergrund)
+    ctx.drawImage(
+        images.map,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+    
+}
 
     // Objekte
     objects.forEach(o => {
