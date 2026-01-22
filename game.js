@@ -14,10 +14,10 @@ let solved = [false, false, false, false];
 let currentRiddle = null;
 
 const riddles = [
-    { text: "Ich werde nass, wenn ich trockne - was bin ich?", solution: "Handtuch" },
-    { text: "Buchstabensalat: RGUBMHA ", solution: "Hamburg" },
-    { text: "Ich bin alt, aber mich kann man trinken – was bin ich?", solution: "Wein" },
-    { text: "Buchstabensalat - LSENLEWS", solution: "Wellness" }
+    { text: "Ich werde nass, wenn ich trockne - was bin ich?", solution: ["Handtuch"] },
+    { text: "Buchstabensalat: RGUBMHA ", solution: ["Hamburg"] },
+    { text: "Ich bin alt, aber mich kann man trinken – was bin ich?", solution: ["Wein"] },
+    { text: "Buchstabensalat - LSENLEWS", solution: ["Wellness"] }
 ];
 
 function move(direction) {
