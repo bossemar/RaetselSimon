@@ -90,7 +90,13 @@ function checkAnswer() {
 function updateProgress() {
     const count = solved.filter(s => s).length;
     progressText.textContent = `Fortschritt: ${count} / 4`;
+
+    if (count === riddles.length) {
+        // Alle Rätsel gelöst → Endscreen anzeigen
+        document.getElementById("end-screen").classList.remove("hidden");
+    }
 }
+
 
 function restartGame() {
     x = 250;
