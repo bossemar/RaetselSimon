@@ -29,6 +29,10 @@ body {
     height: 50px;
     background: orange;
 }
+.object.solved {
+    opacity: 0.3;       /* halbtransparent */
+    pointer-events: none; /* keine Kollision mehr */
+}
 
 #dialog {
     position: fixed;
