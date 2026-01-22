@@ -36,7 +36,12 @@
     <button onclick="move('right')">▶</button>
 </div>
 
-<button onclick="restartGame()">Neustart</button>
+<div id="end-screen" class="hidden">
+    <h2>🎉Juhu, du hast es geschafft!</h2>
+    <button onclick="restartGame()">Erneut spielen</button>
+</div>  
+
+<button onclick="restartGame()">♻️Neustart</button>
 
 <script src="game.js"></script>
 </body>
