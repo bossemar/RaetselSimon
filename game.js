@@ -185,7 +185,6 @@ for (let i = 0; i <= gridSize; i++) {
     ctx.stroke();
 }
     
-}
 
     // Objekte
     objects.forEach(o => {
