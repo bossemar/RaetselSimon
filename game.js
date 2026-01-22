@@ -4,8 +4,6 @@ const images = {
     object2: new Image(),
     object3: new Image(),
     object4: new Image(), 
-    map = new Image()
-
 };
 
 images.player.src = "images/player.png";
@@ -13,8 +11,6 @@ images.object1.src = "images/object1.png";
 images.object2.src = "images/object2.png";
 images.object3.src = "images/object3.png";
 images.object4.src = "images/object4.png";
-images.map.src = "images/map.png";
-
 
 let assetsLoaded = 0;
 const totalAssets = Object.keys(images).length;
@@ -22,9 +18,7 @@ const totalAssets = Object.keys(images).length;
 Object.values(images).forEach(img => {
     img.onload = () => {
         assetsLoaded++;
-if (assetsLoaded === totalAssets) {
-    draw();
-}
+        if (assetsLoaded === totalAssets) draw();
     };
 });
 
