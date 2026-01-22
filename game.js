@@ -7,6 +7,7 @@ const SIZE = 10;
 
 let player = { x: 0, y: 0 };
 let solvedCount = 0;
+updateProgress();
 let activeObject = null;
 
 /* =========================
