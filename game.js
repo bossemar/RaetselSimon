@@ -9,6 +9,12 @@ const progressText = document.getElementById("progress");
 const startScreen = document.getElementById("start-screen");
 const endScreen = document.getElementById("end-screen");
 
+// Spielfeld & Endscreen zunächst verstecken
+document.getElementById("game-container").style.display = "none";
+document.getElementById("controls").style.display = "none";
+endScreen.classList.add("hidden");
+
+
 // Sounds
 const moveSound = new Audio("sounds/move.wav");
 const correctSound = new Audio("sounds/correct.wav");
@@ -99,6 +105,7 @@ function checkCollision() {
         }
     });
 }
+
 
 // =======================
 // Dialog öffnen
@@ -240,15 +247,24 @@ function startGame() {
 // Spiel neustarten
 // =======================
 function restartGame() {
+    // Endscreen ausblenden
+    endScreen.classList.add("hidden");
+
+    // Spielfeld wieder sichtbar machen
+    document.getElementById("game-container").style.display = "block";
+    document.getElementById("controls").style.display = "flex";
+
+    // Spielfigur positionieren
     x = 250;
     y = 250;
     player.style.top = y + "px";
     player.style.left = x + "px";
 
+    // Fortschritt zurücksetzen
     solved = new Array(riddles.length).fill(false);
     document.querySelectorAll(".object").forEach(obj => obj.classList.remove("solved"));
 
-    endScreen.classList.add("hidden");
     updateProgress();
     closeDialog();
 }
+
