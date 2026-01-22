@@ -74,7 +74,7 @@ window.move = move; // für HTML onclick
 function checkCollision() {
     document.querySelectorAll(".object").forEach(obj => {
         if (obj.offsetTop === y && obj.offsetLeft === x && !solved[obj.dataset.id]) {
-            openDialog(obj.dataset.id);
+            (obj.dataset.id);
         }
     });
 }
@@ -97,17 +97,23 @@ function openDialog(id) {
     speech.appendChild(p);
 
     // Je nach Typ: Text-Input oder Multiple Choice
-    if (r.type === "text") {
-        const input = document.createElement("input");
-        input.type = "text";
-        input.id = "answer";
-        input.placeholder = "Antwort hier eingeben";
-        speech.appendChild(input);
+   if (r.type === "text") {
+    const input = document.createElement("input");
+    input.type = "text";
+    input.id = "answer";
+    input.placeholder = "Antwort hier eingeben";
+    input.autocomplete = "off";
+    input.autocapitalize = "none";
+    speech.appendChild(input);
 
-        const okButton = document.createElement("button");
-        okButton.textContent = "OK";
-        okButton.onclick = checkAnswer;
-        speech.appendChild(okButton);
+    // Fokus setzen (wichtig für Smartphones)
+    setTimeout(() => input.focus(), 50);
+
+    const okButton = document.createElement("button");
+    okButton.textContent = "OK";
+    okButton.onclick = checkAnswer;
+    speech.appendChild(okButton);
+}
     } else if (r.type === "multiple") {
         r.options.forEach(opt => {
             const btn = document.createElement("button");
