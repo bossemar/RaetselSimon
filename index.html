@@ -7,10 +7,16 @@
 </head>
 <body>
 
-<h1>🎂Kleines Rätselspiel zum Geburtstag</h1>
+<h1>🎂Rätselspiel zum Geburtstag</h1>
 
 <div id="progress">Fortschritt: 0 / 4</div>
 
+<div id="start-screen">
+    <h2>Happy Birthday Schatzi🥳!</h2>
+    <p>Bereit für ein kleines Rätsel? Klicke Start, um zu beginnen.</p>
+    <button onclick="startGame()">Start</button>
+</div>
+    
 <div id="game-container">
     <div id="player"></div>
 
@@ -35,6 +41,8 @@
     <button onclick="move('down')">▼</button>
     <button onclick="move('right')">▶</button>
 </div>
+
+
 
 <div id="end-screen" class="hidden">
     <h2>🎉Juhu, du hast es geschafft!</h2>
