@@ -24,28 +24,17 @@ let currentRiddle = null;
 // Rätseldefinition
 // =======================
 const riddles = [
-    {
-        type: "text",
-        text: "Ich bin ein Obst und rot – was bin ich?",
-        solution: ["apfel"]
-    },
-    {
-        type: "text",
-        text: "Buchstabensalat: T A C H S – welches Wort entsteht?",
-        solution: ["acht"]
-    },
-    {
-        type: "text",
-        text: "Ich habe Schlüssel, aber keine Türen – was bin ich?",
-        solution: ["klavier"]
-    },
+    { text: "Ich werde nass, wenn ich trockne - was bin ich?", solution: ["handtuch"] },
+    { text: "Buchstabensalat: RGUBMHA ", solution: ["hamburg"] },
     {
         type: "multiple",
-        text: "Welche Farbe hat der Himmel an einem sonnigen Tag?",
-        options: ["grün", "blau", "rot", "gelb"],
-        solution: ["blau"]
-    }
+        text: "Welche der folgenden Eigenschaften beschreibt am besten einen typischen, trockenen Riesling aus Deutschland?",
+        options: ["A: Schwere, buttrige Noten mit wenig Säure", "B: Leichte, knackige Säure mit Aromen von grünen Äpfeln und Zitrusfrüchten", "C: Dunkle Beerenaromen und Tannine", "D: Süße Süßweinaromen und Rosinen"],
+        solution: ["B"]
+    },
+    { text: "Buchstabensalat - LSENLEWS", solution: ["wellness"] }
 ];
+
 
 // =======================
 // Spielfigur bewegen
