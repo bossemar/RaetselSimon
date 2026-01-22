@@ -13,11 +13,6 @@ const moveSound = new Audio("sounds/move.wav");
 const correctSound = new Audio("sounds/correct.wav");
 const wrongSound = new Audio("sounds/wrong.mp3");
 
-document.getElementById("start-btn").onclick = () => {
-    document.getElementById("start-screen").style.display = "none";
-    document.getElementById("game-container").style.display = "block";
-    document.getElementById("controls").style.display = "flex";
-
 // Spielfigur-Position
 let x = 250;
 let y = 250;
@@ -67,8 +62,13 @@ window.onload = () => {
 // =======================
 // Spielfeld initial verbergen
 // =======================
-document.getElementById("game-container").style.display = "none";
-document.getElementById("controls").style.display = "none";
+
+document.getElementById("start-btn").onclick = () => {
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("game-container").style.display = "block";
+    document.getElementById("controls").style.display = "flex";
+
+
 dialog.classList.add("hidden");
 endScreen.classList.add("hidden");
 
