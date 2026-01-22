@@ -233,4 +233,9 @@ body {
         padding: 10px;
         font-size: 1rem;
     }
+
+   #game-container, #controls, #dialog, #end-screen {
+    display: none;
+}
+
 }
