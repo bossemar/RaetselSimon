@@ -2,6 +2,8 @@
    Grundeinstellungen
 ========================= */
 
+let gameStarted = false;
+
 const TILE = 32;
 const SIZE = 10;
 
