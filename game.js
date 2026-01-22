@@ -83,7 +83,7 @@ function checkAnswer() {
         closeDialog();
     } else {
         wrongSound.play();
-        alert("Leider falsch. Versuche es erneut.");
+        alert("❌ Leider falsch. Versuche es erneut.");
     }
 }
 
