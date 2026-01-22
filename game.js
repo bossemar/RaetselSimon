@@ -240,10 +240,11 @@ function updateProgress() {
     const count = solved.filter(s => s).length;
     progressText.textContent = `Fortschritt: ${count} / ${riddles.length}`;
 
-    if (count === riddles.length && count > 0) {
-        endScreen.classList.remove("hidden");
-    } else {
-        endScreen.classList.add("hidden");
+    if (count === riddles.length) {
+        document.getElementById("end-screen").style.display = "flex";
+        document.getElementById("game-container").style.display = "none";
+        document.getElementById("controls").style.display = "none";
+        dialog.classList.add("hidden");
     }
 }
 
