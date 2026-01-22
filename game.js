@@ -14,10 +14,10 @@ let solved = [false, false, false, false];
 let currentRiddle = null;
 
 const riddles = [
-    { text: "Ich werde nass, wenn ich trockne - was bin ich?", solution: ["Handtuch"] },
-    { text: "Buchstabensalat: RGUBMHA ", solution: ["Hamburg"] },
-    { text: "Ich bin alt, aber mich kann man trinken – was bin ich?", solution: ["Wein"] },
-    { text: "Buchstabensalat - LSENLEWS", solution: ["Wellness"] }
+    { text: "Ich werde nass, wenn ich trockne - was bin ich?", solution: ["handtuch"] },
+    { text: "Buchstabensalat: RGUBMHA ", solution: ["hamburg"] },
+    { text: "Ich bin alt, aber mich kann man trinken – was bin ich?", solution: ["wein"] },
+    { text: "Buchstabensalat - LSENLEWS", solution: ["wellness"] }
 ];
 
 function move(direction) {
@@ -65,16 +65,24 @@ function closeDialog() {
 }
 
 function checkAnswer() {
-    const userAnswer = answerInput.value.toLowerCase().trim();
+    const userAnswer = answerInput.value
+        .toLowerCase()
+        .trim()
+        .replace(/ä/g, "ae")
+        .replace(/ö/g, "oe")
+        .replace(/ü/g, "ue")
+        .replace(/ß/g, "ss");
 
-    if (userAnswer === riddles[currentRiddle].solution) {
+    const validSolutions = riddles[currentRiddle].solution;
+
+    if (validSolutions.includes(userAnswer)) {
         correctSound.play();
         solved[currentRiddle] = true;
         updateProgress();
         closeDialog();
     } else {
         wrongSound.play();
-        alert("Falsch!");
+        alert("Leider falsch. Versuche es erneut.");
     }
 }
 
