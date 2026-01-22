@@ -84,3 +84,21 @@ h1 {
   margin-top: 10px;
   font-weight: bold;
 }
+#startScreen {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+}
+
+#startScreen button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
