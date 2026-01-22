@@ -1,3 +1,18 @@
+const images = {
+    player: new Image(),
+    object1: new Image(),
+    object2: new Image(),
+    object3: new Image(),
+    object4: new Image()
+};
+
+images.player.src = "images/player.png";
+images.object1.src = "images/object1.png";
+images.object2.src = "images/object2.png";
+images.object3.src = "images/object3.png";
+images.object4.src = "images/object4.png";
+
+
 const canvas = document.getElementById("game-canvas");
 const ctx = canvas.getContext("2d");
 
@@ -171,8 +186,14 @@ function draw() {
     });
 
     // Spieler
-    ctx.fillStyle = "blue";
-    ctx.fillRect(player.x * tileSize, player.y * tileSize, tileSize, tileSize);
+ctx.drawImage(
+    images.player,
+    player.x * tileSize,
+    player.y * tileSize,
+    tileSize,
+    tileSize
+);
+
 
     progressEl.textContent = `Rätsel ${solvedCount}/${objects.length} geschafft`;
 }
