@@ -13,14 +13,26 @@ const moveSound = new Audio("sounds/move.wav");
 const correctSound = new Audio("sounds/correct.wav");
 const wrongSound = new Audio("sounds/wrong.mp3");
 
+document.getElementById("start-btn").onclick = () => {
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("game-container").style.display = "block";
+    document.getElementById("controls").style.display = "flex";
+
 // Spielfigur-Position
 let x = 250;
 let y = 250;
+
+player.style.top = y + "px";
+player.style.left = x + "px";
 
 // Fortschritt
 let solved = [];
 let currentRiddle = null;
 
+// Fortschritt zurücksetzen
+solved = new Array(riddles.length).fill(false);
+document.querySelectorAll(".object").forEach(obj => obj.classList.remove("solved"));
+updateProgress();
 // =======================
 // Rätseldefinition
 // =======================
@@ -246,3 +258,19 @@ function restartGame() {
     document.getElementById("controls").style.display = "none";
     dialog.classList.add("hidden");
 }
+
+document.getElementById("restart-btn").onclick = () => {
+    // Endscreen ausblenden
+    document.getElementById("end-screen").style.display = "none";
+
+    // Startscreen wieder anzeigen
+    document.getElementById("start-screen").style.display = "flex";
+
+    // Spielfeld & Steuerung ausblenden
+    document.getElementById("game-container").style.display = "none";
+    document.getElementById("controls").style.display = "none";
+
+    // Dialog schließen
+    dialog.classList.add("hidden");
+};
+
