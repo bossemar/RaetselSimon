@@ -15,6 +15,19 @@ images.object3.src = "images/object3.png";
 images.object4.src = "images/object4.png";
 images.map.src = "images/map.png";
 
+let assetsLoaded = 0;
+const totalAssets = Object.keys(images).length;
+
+Object.values(images).forEach(img => {
+    img.onload = () => {
+        assetsLoaded++;
+        if (assetsLoaded === totalAssets) {
+            draw();
+        }
+    };
+});
+
+
 const canvas = document.getElementById("game-canvas");
 const ctx = canvas.getContext("2d");
 
