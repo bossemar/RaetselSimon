@@ -48,6 +48,10 @@ const riddles = [
     }
 ];
 
+window.onload = () => {
+    document.getElementById("start-screen").style.display = "flex";
+}
+
 // =======================
 // Spielfeld initial verbergen
 // =======================
