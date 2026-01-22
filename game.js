@@ -18,10 +18,10 @@ let player = { x: 0, y: 0 };
 
 // Objekte mit Positionen
 let objects = [
-    {x: 2, y: 3, solved: false, text: "Finde das Wort: E _ N _ E", answer: "ENTE"},
-    {x: 7, y: 1, solved: false, text: "Buchstabensalat: A P P L E", answer: "APPLE"},
+    {x: 2, y: 3, solved: false, text: "Buchstabensalat: RGUBMHA ", answer: "Hamburg"},
+    {x: 7, y: 1, solved: false, text: "Ich werde nass, wenn ich trockne - was bin ich?", answer: "Handtuch"},
     {x: 4, y: 8, solved: false, text: "Was ist 5 + 3?", answer: "8"},
-    {x: 9, y: 6, solved: false, text: "Welches Tier miaut?", answer: "KATZE"}
+    {x: 9, y: 6, solved: false, text: "Buchstabensalat - LSENLEWS", answer: "Wellness"}
 ];
 
 // Sounds
