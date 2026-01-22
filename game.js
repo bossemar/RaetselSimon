@@ -5,6 +5,8 @@ const player = document.getElementById("player");
 const dialog = document.getElementById("dialog");
 const speech = document.querySelector(".speechbubble");
 const progressText = document.getElementById("progress");
+// Variablen für Screens
+const startScreen = document.getElementById("start-screen");
 const endScreen = document.getElementById("end-screen");
 
 // Sounds
@@ -210,6 +212,28 @@ function updateProgress() {
     } else {
         endScreen.classList.add("hidden");
     }
+}
+
+// Startspiel-Funktion
+function startGame() {
+    // Startscreen ausblenden
+    startScreen.classList.add("hidden");
+
+    // Spielfeld sichtbar machen
+    document.getElementById("game-container").style.display = "block";
+    document.getElementById("controls").style.display = "flex";
+
+    // Spielfigur initial positionieren
+    x = 250;
+    y = 250;
+    player.style.top = y + "px";
+    player.style.left = x + "px";
+
+    // Fortschritt initialisieren
+    solved = new Array(riddles.length).fill(false);
+    document.querySelectorAll(".object").forEach(obj => obj.classList.remove("solved"));
+
+    updateProgress();
 }
 
 // =======================
