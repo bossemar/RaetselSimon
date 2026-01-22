@@ -221,6 +221,7 @@ const startButton = document.getElementById("startButton");
 startButton.addEventListener("click", () => {
   gameStarted = true;
   startScreen.style.display = "none";
+   draw();
 });
 const restartButton = document.getElementById("restartButton");
 
