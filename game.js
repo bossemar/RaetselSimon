@@ -186,6 +186,7 @@ function draw() {
     });
 
     // Spieler
+ctx.fillStyle = "blue";
 ctx.drawImage(
     images.player,
     player.x * tileSize,
