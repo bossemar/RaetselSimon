@@ -79,6 +79,8 @@ function checkAnswer() {
     if (validSolutions.includes(userAnswer)) {
         correctSound.play();
         solved[currentRiddle] = true;
+        // Objekt visuell deaktivieren
+        document.querySelector(`.object[data-id='${currentRiddle}']`).classList.add("solved");
         updateProgress();
         closeDialog();
     } else {
