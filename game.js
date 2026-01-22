@@ -15,7 +15,6 @@ images.object3.src = "images/object3.png";
 images.object4.src = "images/object4.png";
 images.map.src = "images/map.png";
 
-let assetsReady = false;
 
 let assetsLoaded = 0;
 const totalAssets = Object.keys(images).length;
@@ -23,9 +22,9 @@ const totalAssets = Object.keys(images).length;
 Object.values(images).forEach(img => {
     img.onload = () => {
         assetsLoaded++;
-        if (assetsLoaded === totalAssets) {
-            assetsReady = true;
-        }
+if (assetsLoaded === totalAssets) {
+    draw();
+}
     };
 });
 
@@ -84,11 +83,8 @@ const objects = [
 
 // ---------- Start / Restart ----------
 document.getElementById("start-btn").onclick = () => {
-    if (!assetsReady) return; // Sicherheit
-
     startScreen.classList.add("hidden");
     gameScreen.classList.remove("hidden");
-    draw(); // erstes Rendern JETZT
 };
 
 
@@ -181,14 +177,19 @@ function closeDialog() {
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Karte (Hintergrund)
-    ctx.drawImage(
-        images.map,
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
+// Raster
+ctx.strokeStyle = "#ccc";
+for (let i = 0; i <= gridSize; i++) {
+    ctx.beginPath();
+    ctx.moveTo(i * tileSize, 0);
+    ctx.lineTo(i * tileSize, gridSize * tileSize);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(0, i * tileSize);
+    ctx.lineTo(gridSize * tileSize, i * tileSize);
+    ctx.stroke();
+}
     
 }
 
