@@ -1,19 +1,12 @@
 // =======================
-// Variablen & DOM-Elemente
+// DOM-Elemente
 // =======================
 const player = document.getElementById("player");
 const dialog = document.getElementById("dialog");
 const speech = document.querySelector(".speechbubble");
 const progressText = document.getElementById("progress");
-// Variablen für Screens
-const startScreen = document.getElementById("start-screen");
 const endScreen = document.getElementById("end-screen");
-
-// Spielfeld & Endscreen zunächst verstecken
-document.getElementById("game-container").style.display = "none";
-document.getElementById("controls").style.display = "none";
-endScreen.classList.add("hidden");
-
+const startScreen = document.getElementById("start-screen");
 
 // Sounds
 const moveSound = new Audio("sounds/move.wav");
@@ -56,15 +49,36 @@ const riddles = [
 ];
 
 // =======================
-// Initialisierung
+// Spielfeld initial verbergen
 // =======================
-function initGame() {
-    solved = new Array(riddles.length).fill(false);
-    updateProgress();
-    closeDialog();
-}
+document.getElementById("game-container").style.display = "none";
+document.getElementById("controls").style.display = "none";
+dialog.classList.add("hidden");
+endScreen.classList.add("hidden");
 
-initGame();
+// =======================
+// Startspiel-Funktion
+// =======================
+function startGame() {
+    // Startscreen ausblenden
+    startScreen.classList.add("hidden");
+
+    // Spielfeld sichtbar machen
+    document.getElementById("game-container").style.display = "block";
+    document.getElementById("controls").style.display = "flex";
+
+    // Spielfigur initial positionieren
+    x = 250;
+    y = 250;
+    player.style.top = y + "px";
+    player.style.left = x + "px";
+
+    // Fortschritt initialisieren
+    solved = new Array(riddles.length).fill(false);
+    document.querySelectorAll(".object").forEach(obj => obj.classList.remove("solved"));
+
+    updateProgress();
+}
 
 // =======================
 // Spielfigur bewegen
@@ -93,7 +107,7 @@ document.addEventListener("keydown", e => {
 });
 
 // Touch-Buttons
-window.move = move; // für HTML onclick
+window.move = move;
 
 // =======================
 // Kollision mit Objekten
@@ -106,7 +120,6 @@ function checkCollision() {
     });
 }
 
-
 // =======================
 // Dialog öffnen
 // =======================
@@ -118,7 +131,7 @@ function openDialog(id) {
 
     speech.innerHTML = "";
 
-    // Text
+    // Text anzeigen
     const p = document.createElement("p");
     p.textContent = r.text;
     speech.appendChild(p);
@@ -176,10 +189,8 @@ function checkAnswer(userInput) {
     let userAnswer;
 
     if (userInput !== undefined) {
-        // Multiple Choice
         userAnswer = userInput.toLowerCase().trim();
     } else {
-        // Text-Rätsel
         const input = document.getElementById("answer");
         if (!input) return;
         userAnswer = input.value.toLowerCase().trim()
@@ -213,7 +224,6 @@ function updateProgress() {
     const count = solved.filter(s => s).length;
     progressText.textContent = `Fortschritt: ${count} / ${riddles.length}`;
 
-    // Endscreen nur anzeigen, wenn wirklich alle gelöst
     if (count === riddles.length && count > 0) {
         endScreen.classList.remove("hidden");
     } else {
@@ -221,50 +231,14 @@ function updateProgress() {
     }
 }
 
-// Startspiel-Funktion
-function startGame() {
-    // Startscreen ausblenden
-    startScreen.classList.add("hidden");
-
-    // Spielfeld sichtbar machen
-    document.getElementById("game-container").style.display = "block";
-    document.getElementById("controls").style.display = "flex";
-
-    // Spielfigur initial positionieren
-    x = 250;
-    y = 250;
-    player.style.top = y + "px";
-    player.style.left = x + "px";
-
-    // Fortschritt initialisieren
-    solved = new Array(riddles.length).fill(false);
-    document.querySelectorAll(".object").forEach(obj => obj.classList.remove("solved"));
-
-    updateProgress();
-}
-
 // =======================
-// Spiel neustarten
+// Spiel neustarten (vom Endscreen)
 // =======================
 function restartGame() {
-    // Endscreen ausblenden
     endScreen.classList.add("hidden");
+    startScreen.classList.remove("hidden");
 
-    // Spielfeld wieder sichtbar machen
-    document.getElementById("game-container").style.display = "block";
-    document.getElementById("controls").style.display = "flex";
-
-    // Spielfigur positionieren
-    x = 250;
-    y = 250;
-    player.style.top = y + "px";
-    player.style.left = x + "px";
-
-    // Fortschritt zurücksetzen
-    solved = new Array(riddles.length).fill(false);
-    document.querySelectorAll(".object").forEach(obj => obj.classList.remove("solved"));
-
-    updateProgress();
-    closeDialog();
+    document.getElementById("game-container").style.display = "none";
+    document.getElementById("controls").style.display = "none";
+    dialog.classList.add("hidden");
 }
-
