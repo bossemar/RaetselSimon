@@ -16,7 +16,12 @@ let currentRiddle = null;
 const riddles = [
     { text: "Ich werde nass, wenn ich trockne - was bin ich?", solution: ["handtuch"] },
     { text: "Buchstabensalat: RGUBMHA ", solution: ["hamburg"] },
-    { text: "Ich bin alt, aber mich kann man trinken – was bin ich?", solution: ["wein"] },
+    {
+        type: "multiple",
+        text: "Welche der folgenden Eigenschaften beschreibt am besten einen typischen, trockenen Riesling aus Deutschland?",
+        options: ["A: Schwere, buttrige Noten mit wenig Säure", "B: Leichte, knackige Säure mit Aromen von grünen Äpfeln und Zitrusfrüchten", "C: Dunkle Beerenaromen und Tannine", "D: Süße Süßweinaromen und Rosinen"],
+        solution: ["B"]
+    },
     { text: "Buchstabensalat - LSENLEWS", solution: ["wellness"] }
 ];
 
@@ -56,9 +61,47 @@ function checkCollision() {
 function openDialog(id) {
     if (solved[id]) return;
     currentRiddle = id;
-    riddleText.textContent = riddles[id].text;
+    const r = riddles[id];
+
+    // Dialog-Container leeren
+    const speech = document.querySelector(".speechbubble");
+    speech.innerHTML = "";
+
+    // Text
+    const p = document.createElement("p");
+    p.textContent = r.text;
+    speech.appendChild(p);
+
+    if (r.type === "text") {
+        const input = document.createElement("input");
+        input.type = "text";
+        input.id = "answer";
+        speech.appendChild(input);
+
+        const okButton = document.createElement("button");
+        okButton.textContent = "OK";
+        okButton.onclick = checkAnswer;
+        speech.appendChild(okButton);
+    }
+
+    if (r.type === "multiple") {
+        r.options.forEach(opt => {
+            const btn = document.createElement("button");
+            btn.textContent = opt;
+            btn.onclick = () => checkAnswer(opt);
+            speech.appendChild(btn);
+        });
+    }
+
+    // Schließen-Button
+    const closeBtn = document.createElement("button");
+    closeBtn.textContent = "Schließen";
+    closeBtn.onclick = closeDialog;
+    speech.appendChild(closeBtn);
+
     dialog.classList.remove("hidden");
 }
+
 
 function closeDialog() {
     dialog.classList.add("hidden");
