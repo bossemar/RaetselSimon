@@ -222,4 +222,22 @@ startButton.addEventListener("click", () => {
   gameStarted = true;
   startScreen.style.display = "none";
 });
+const restartButton = document.getElementById("restartButton");
+
+restartButton.addEventListener("click", () => {
+  solvedCount = 0;
+  updateProgress();
+
+  riddles.forEach(r => r.solved = false);
+
+  player.x = 0;
+  player.y = 0;
+
+  document.getElementById("end").classList.add("hidden");
+
+  gameStarted = false;
+  startScreen.style.display = "flex";
+
+  draw();
+});
 
