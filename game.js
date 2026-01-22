@@ -24,15 +24,18 @@ let currentRiddle = null;
 // Rätseldefinition
 // =======================
 const riddles = [
-    { text: "Ich werde nass, wenn ich trockne - was bin ich?", solution: ["handtuch"] },
-    { text: "Buchstabensalat: RGUBMHA ", solution: ["hamburg"] },
+    {    type: "text",
+         text: "Ich werde nass, wenn ich trockne - was bin ich?", solution: ["handtuch"] },
+    {    type: "text",
+         text: "Buchstabensalat: RGUBMHA ", solution: ["hamburg"] },
     {
         type: "multiple",
         text: "Welche der folgenden Eigenschaften beschreibt am besten einen typischen, trockenen Riesling aus Deutschland?",
         options: ["A: Schwere, buttrige Noten mit wenig Säure", "B: Leichte, knackige Säure mit Aromen von grünen Äpfeln und Zitrusfrüchten", "C: Dunkle Beerenaromen und Tannine", "D: Süße Süßweinaromen und Rosinen"],
-        solution: ["B"]
+        solution: ["B: Leichte, knackige Säure mit Aromen von grünen Äpfeln und Zitrusfrüchten"]
     },
-    { text: "Buchstabensalat - LSENLEWS", solution: ["wellness"] }
+    {   type: "text", 
+        text: "Buchstabensalat - LSENLEWS", solution: ["wellness"] }
 ];
 
 
