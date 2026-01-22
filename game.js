@@ -213,3 +213,12 @@ function endGame() {
 
 updatePlayer();
 updateProgress();
+
+const startScreen = document.getElementById("startScreen");
+const startButton = document.getElementById("startButton");
+
+startButton.addEventListener("click", () => {
+  gameStarted = true;
+  startScreen.style.display = "none";
+});
+
