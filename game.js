@@ -35,6 +35,7 @@ function move(direction) {
 }
 
 document.addEventListener("keydown", e => {
+    if (!moveSound.paused) moveSound.currentTime = 0; // Start zurücksetzen
     if (e.key === "ArrowUp") move("up");
     if (e.key === "ArrowDown") move("down");
     if (e.key === "ArrowLeft") move("left");
