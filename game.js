@@ -7,11 +7,6 @@ const speech = document.querySelector(".speechbubble");
 const progressText = document.getElementById("progress");
 const endScreen = document.getElementById("end-screen");
 
-// Fortschritt initial zurücksetzen
-solved = new Array(riddles.length).fill(false);
-updateProgress(); // Fortschritt einmal sauber aktualisieren
-
-
 // Sounds
 const moveSound = new Audio("sounds/move.wav");
 const correctSound = new Audio("sounds/correct.wav");
@@ -22,33 +17,52 @@ let x = 250;
 let y = 250;
 
 // Fortschritt
-let solved = [false, false, false, false];
+let solved = [];
 let currentRiddle = null;
 
 // =======================
 // Rätseldefinition
 // =======================
 const riddles = [
-    {    type: "text",
-         text: "Ich werde nass, wenn ich trockne - was bin ich?", solution: ["handtuch"] },
-    {    type: "text",
-         text: "Buchstabensalat: RGUBMHA ", solution: ["hamburg"] },
+    {
+        type: "text",
+        text: "Ich bin ein Obst und rot – was bin ich?",
+        solution: ["apfel"]
+    },
+    {
+        type: "text",
+        text: "Buchstabensalat: T A C H S – welches Wort entsteht?",
+        solution: ["acht"]
+    },
+    {
+        type: "text",
+        text: "Ich habe Schlüssel, aber keine Türen – was bin ich?",
+        solution: ["klavier"]
+    },
     {
         type: "multiple",
-        text: "Welche der folgenden Eigenschaften beschreibt am besten einen typischen, trockenen Riesling aus Deutschland?",
-        options: ["A: Schwere, buttrige Noten mit wenig Säure", "B: Leichte, knackige Säure mit Aromen von grünen Äpfeln und Zitrusfrüchten", "C: Dunkle Beerenaromen und Tannine", "D: Süße Süßweinaromen und Rosinen"],
-        solution: ["B: Leichte, knackige Säure mit Aromen von grünen Äpfeln und Zitrusfrüchten"]
-    },
-    {   type: "text", 
-        text: "Buchstabensalat - LSENLEWS", solution: ["wellness"] }
+        text: "Welche Farbe hat der Himmel an einem sonnigen Tag?",
+        options: ["grün", "blau", "rot", "gelb"],
+        solution: ["blau"]
+    }
 ];
 
+// =======================
+// Initialisierung
+// =======================
+function initGame() {
+    solved = new Array(riddles.length).fill(false);
+    updateProgress();
+    closeDialog();
+}
+
+initGame();
 
 // =======================
 // Spielfigur bewegen
 // =======================
 function move(direction) {
-    if (!moveSound.paused) moveSound.currentTime = 0; // Sound neu starten
+    if (!moveSound.paused) moveSound.currentTime = 0;
     moveSound.play();
 
     if (direction === "up" && y > 0) y -= 50;
@@ -79,7 +93,7 @@ window.move = move; // für HTML onclick
 function checkCollision() {
     document.querySelectorAll(".object").forEach(obj => {
         if (obj.offsetTop === y && obj.offsetLeft === x && !solved[obj.dataset.id]) {
-            (obj.dataset.id);
+            openDialog(obj.dataset.id);
         }
     });
 }
@@ -93,33 +107,33 @@ function openDialog(id) {
     currentRiddle = id;
     const r = riddles[id];
 
-    // Sprechblase leeren
     speech.innerHTML = "";
 
-    // Rätseltext
+    // Text
     const p = document.createElement("p");
     p.textContent = r.text;
     speech.appendChild(p);
 
-    // Je nach Typ: Text-Input oder Multiple Choice
-   if (r.type === "text") {
-    const input = document.createElement("input");
-    input.type = "text";
-    input.id = "answer";
-    input.placeholder = "Antwort hier eingeben";
-    input.autocomplete = "off";
-    input.autocapitalize = "none";
-    speech.appendChild(input);
+    // Text-Rätsel
+    if (r.type === "text") {
+        const input = document.createElement("input");
+        input.type = "text";
+        input.id = "answer";
+        input.placeholder = "Antwort hier eingeben";
+        input.autocomplete = "off";
+        input.autocapitalize = "none";
+        speech.appendChild(input);
 
-    // Fokus setzen (wichtig für Smartphones)
-    setTimeout(() => input.focus(), 50);
+        setTimeout(() => input.focus(), 50);
 
-    const okButton = document.createElement("button");
-    okButton.textContent = "OK";
-    okButton.onclick = checkAnswer;
-    speech.appendChild(okButton);
-}
-    } else if (r.type === "multiple") {
+        const okButton = document.createElement("button");
+        okButton.textContent = "OK";
+        okButton.onclick = checkAnswer;
+        speech.appendChild(okButton);
+    }
+
+    // Multiple Choice
+    else if (r.type === "multiple") {
         r.options.forEach(opt => {
             const btn = document.createElement("button");
             btn.textContent = opt;
@@ -128,7 +142,7 @@ function openDialog(id) {
         });
     }
 
-    // Schließen-Button immer hinzufügen
+    // Schließen-Button
     const closeBtn = document.createElement("button");
     closeBtn.textContent = "Schließen";
     closeBtn.onclick = closeDialog;
@@ -142,7 +156,6 @@ function openDialog(id) {
 // =======================
 function closeDialog() {
     dialog.classList.add("hidden");
-    // input leeren, falls vorhanden
     const input = document.getElementById("answer");
     if (input) input.value = "";
 }
@@ -159,7 +172,7 @@ function checkAnswer(userInput) {
     } else {
         // Text-Rätsel
         const input = document.getElementById("answer");
-        if (!input) return; // Sicherheitscheck
+        if (!input) return;
         userAnswer = input.value.toLowerCase().trim()
             .replace(/ä/g, "ae")
             .replace(/ö/g, "oe")
@@ -173,7 +186,6 @@ function checkAnswer(userInput) {
         correctSound.play();
         solved[currentRiddle] = true;
 
-        // Objekt optisch deaktivieren
         const obj = document.querySelector(`.object[data-id='${currentRiddle}']`);
         if (obj) obj.classList.add("solved");
 
@@ -192,14 +204,13 @@ function updateProgress() {
     const count = solved.filter(s => s).length;
     progressText.textContent = `Fortschritt: ${count} / ${riddles.length}`;
 
-    // Endscreen nur anzeigen, wenn count > 0 und alle gelöst
+    // Endscreen nur anzeigen, wenn wirklich alle gelöst
     if (count === riddles.length && count > 0) {
         endScreen.classList.remove("hidden");
     } else {
         endScreen.classList.add("hidden");
     }
 }
-
 
 // =======================
 // Spiel neustarten
@@ -210,20 +221,10 @@ function restartGame() {
     player.style.top = y + "px";
     player.style.left = x + "px";
 
-    // Fortschritt zurücksetzen
     solved = new Array(riddles.length).fill(false);
-
-    // Objekte wieder aktiv
     document.querySelectorAll(".object").forEach(obj => obj.classList.remove("solved"));
 
-    // Endscreen ausblenden
     endScreen.classList.add("hidden");
-
-    updateProgress();
-    closeDialog();
-}
-
-
     updateProgress();
     closeDialog();
 }
