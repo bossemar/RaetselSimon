@@ -79,6 +79,7 @@ function move(dx, dy) {
 
 /* Tastatur */
 document.addEventListener("keydown", e => {
+   if (!gameStarted) return;
   if (document.getElementById("dialog").classList.contains("hidden") === false) return;
 
   if (e.key === "ArrowUp") move(0, -1);
