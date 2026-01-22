@@ -75,12 +75,12 @@ function openDialog(id) {
     if (r.type === "text") {
         const input = document.createElement("input");
         input.type = "text";
-        input.id = "answer";
+        input.id = "";
         speech.appendChild(input);
 
         const okButton = document.createElement("button");
         okButton.textContent = "OK";
-        okButton.onclick = checkAnswer;
+        okButton.onclick = check;
         speech.appendChild(okButton);
     }
 
@@ -88,7 +88,7 @@ function openDialog(id) {
         r.options.forEach(opt => {
             const btn = document.createElement("button");
             btn.textContent = opt;
-            btn.onclick = () => checkAnswer(opt);
+            btn.onclick = () => check(opt);
             speech.appendChild(btn);
         });
     }
@@ -105,19 +105,26 @@ function openDialog(id) {
 
 function closeDialog() {
     dialog.classList.add("hidden");
-    answerInput.value = "";
+    Input.value = "";
 }
 
-function checkAnswer() {
-    const userAnswer = answerInput.value
-        .toLowerCase()
-        .trim()
-        .replace(/ä/g, "ae")
-        .replace(/ö/g, "oe")
-        .replace(/ü/g, "ue")
-        .replace(/ß/g, "ss");
+function checkAnswer(userInput) {
+    let userAnswer;
 
-    const validSolutions = riddles[currentRiddle].solution;
+    if (userInput !== undefined) {
+        // Multiple Choice
+        userAnswer = userInput.toLowerCase().trim();
+    } else {
+        // Text-Rätsel
+        const input = document.getElementById("answer");
+        userAnswer = input.value.toLowerCase().trim()
+            .replace(/ä/g, "ae")
+            .replace(/ö/g, "oe")
+            .replace(/ü/g, "ue")
+            .replace(/ß/g, "ss");
+    }
+
+    const validSolutions = riddles[currentRiddle].solution.map(s => s.toLowerCase());
 
     if (validSolutions.includes(userAnswer)) {
         correctSound.play();
