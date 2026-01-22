@@ -40,25 +40,25 @@ const wrongSound = new Audio("sounds/wrong.mp3");
 // Rätsel-Objekte
 const objects = [
     {
-        x: 2, y: 2, solved: false, fading: false,
+        x: 2, y: 2, image: images.object1, solved: false, fading: false,
         question: "Welches Tier quakt?",
         answers: ["Hund", "Ente", "Katze"],
         correct: 1
     },
     {
-        x: 7, y: 1, solved: false, fading: false,
+        x: 7, y: 1, image: images.object2, solved: false, fading: false,
         question: "Buchstabensalat: P A P E L",
         answers: ["Apfel", "Papel", "Lapep"],
         correct: 0
     },
     {
-        x: 4, y: 8, solved: false, fading: false,
+        x: 4, y: 8, image: images.object3, solved: false, fading: false,
         question: "5 + 3 = ?",
         answers: ["6", "7", "8"],
         correct: 2
     },
     {
-        x: 9, y: 6, solved: false, fading: false,
+        x: 9, y: 6, image: images.object4, solved: false, fading: false,
         question: "Welche Farbe hat der Himmel?",
         answers: ["Grün", "Blau", "Rot"],
         correct: 1
@@ -181,12 +181,27 @@ function draw() {
             ctx.globalAlpha = o.fading ? 0.4 : 1;
             ctx.fillStyle = "orange";
             ctx.fillRect(o.x * tileSize, o.y * tileSize, tileSize, tileSize);
+            objects.forEach(o => {
+    if (!o.solved || o.fading) {
+        ctx.globalAlpha = o.fading ? 0.4 : 1;
+        ctx.drawImage(
+            o.image,
+            o.x * tileSize,
+            o.y * tileSize,
+            tileSize,
+            tileSize
+        );
+        ctx.globalAlpha = 1;
+    }
+});
+
             ctx.globalAlpha = 1;
         }
     });
 
     // Spieler
 ctx.fillStyle = "blue";
+ctx.fillRect(player.x * tileSize, player.y * tileSize, tileSize, tileSize);
 ctx.drawImage(
     images.player,
     player.x * tileSize,
