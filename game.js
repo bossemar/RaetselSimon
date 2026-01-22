@@ -97,6 +97,14 @@ document.querySelectorAll("#controls button").forEach(btn => {
     if (dir === "left") move(-1, 0);
     if (dir === "right") move(1, 0);
   });
+
+  function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  drawGrid();
+  drawObjects();
+  drawPlayer(); 
+  }
 });
 
 /* =========================
@@ -208,6 +216,8 @@ function endGame() {
   document.getElementById("end").classList.remove("hidden");
 }
 
+
+
 /* =========================
    Initialisierung
 ========================= */
@@ -238,6 +248,7 @@ restartButton.addEventListener("click", () => {
 
   gameStarted = false;
   startScreen.style.display = "flex";
+
 
   draw();
 });
