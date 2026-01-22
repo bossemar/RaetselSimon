@@ -15,6 +15,8 @@ images.object3.src = "images/object3.png";
 images.object4.src = "images/object4.png";
 images.map.src = "images/map.png";
 
+let assetsReady = false;
+
 let assetsLoaded = 0;
 const totalAssets = Object.keys(images).length;
 
@@ -22,7 +24,7 @@ Object.values(images).forEach(img => {
     img.onload = () => {
         assetsLoaded++;
         if (assetsLoaded === totalAssets) {
-            draw();
+            assetsReady = true;
         }
     };
 });
@@ -82,10 +84,13 @@ const objects = [
 
 // ---------- Start / Restart ----------
 document.getElementById("start-btn").onclick = () => {
+    if (!assetsReady) return; // Sicherheit
+
     startScreen.classList.add("hidden");
     gameScreen.classList.remove("hidden");
-    draw();
+    draw(); // erstes Rendern JETZT
 };
+
 
 document.getElementById("restart-btn").onclick = () => location.reload();
 
