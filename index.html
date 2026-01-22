@@ -15,7 +15,6 @@
   <div id="player"></div>
 </div>
 
-<!-- Touch-Steuerung -->
 <div id="controls">
   <button data-dir="up">▲</button>
   <div>
@@ -25,40 +24,27 @@
   </div>
 </div>
 
-<!-- Dialog -->
 <div id="dialog" class="hidden">
   <div id="speechbubble">
     <p id="dialogText"></p>
-    <input type="text" id="answer" placeholder="Antwort eingeben">
-    <button id="submit">OK</button>
-  </div>
-</div>
-
-<!-- Endscreen -->
-<div id="end" class="hidden">
-  <div class="endbox">
-    <h2>🎉 Geschafft!</h2>
-    <p>Alle Rätsel wurden gelöst.</p>
-  </div>
-</div>
-
-<script src="game.js"></script>
-</body>
-</html>
-
-<div id="dialog" class="hidden">
-  <div id="speechbubble">
-    <p id="dialogText"></p>
-
     <input
       type="text"
       id="answer"
       placeholder="Antwort hier eingeben"
       autocomplete="off"
     >
-
     <p id="feedback"></p>
-
     <button id="submit">OK</button>
   </div>
 </div>
+
+<div id="end" class="hidden">
+  <div class="endbox">
+    <h2>🎉 Geschafft Schatzi!</h2>
+    <p>Juhu. Alle Rätsel wurden gelöst.</p>
+  </div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
