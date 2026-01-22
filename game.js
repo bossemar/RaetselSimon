@@ -7,6 +7,11 @@ const speech = document.querySelector(".speechbubble");
 const progressText = document.getElementById("progress");
 const endScreen = document.getElementById("end-screen");
 
+// Fortschritt initial zurücksetzen
+solved = new Array(riddles.length).fill(false);
+updateProgress(); // Fortschritt einmal sauber aktualisieren
+
+
 // Sounds
 const moveSound = new Audio("sounds/move.wav");
 const correctSound = new Audio("sounds/correct.wav");
@@ -187,13 +192,14 @@ function updateProgress() {
     const count = solved.filter(s => s).length;
     progressText.textContent = `Fortschritt: ${count} / ${riddles.length}`;
 
-    if (count === riddles.length) {
-        // Endscreen anzeigen
+    // Endscreen nur anzeigen, wenn count > 0 und alle gelöst
+    if (count === riddles.length && count > 0) {
         endScreen.classList.remove("hidden");
     } else {
         endScreen.classList.add("hidden");
     }
 }
+
 
 // =======================
 // Spiel neustarten
@@ -204,10 +210,19 @@ function restartGame() {
     player.style.top = y + "px";
     player.style.left = x + "px";
 
-    solved = [false, false, false, false];
+    // Fortschritt zurücksetzen
+    solved = new Array(riddles.length).fill(false);
 
     // Objekte wieder aktiv
     document.querySelectorAll(".object").forEach(obj => obj.classList.remove("solved"));
+
+    // Endscreen ausblenden
+    endScreen.classList.add("hidden");
+
+    updateProgress();
+    closeDialog();
+}
+
 
     updateProgress();
     closeDialog();
