@@ -1,8 +1,18 @@
 body {
-  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
   background: #1e1e1e;
   color: white;
+  font-family: Arial, sans-serif;
   text-align: center;
+}
+
+h1 {
+  margin-top: 20px;
+}
+
+#progress {
+  margin-bottom: 10px;
 }
 
 #game {
@@ -11,12 +21,11 @@ body {
   height: 320px;
   margin: 20px auto;
   background: #444;
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: repeat(10, 1fr);
+  border: 2px solid #666;
 }
 
-#player, .object {
+#player,
+.object {
   position: absolute;
   width: 32px;
   height: 32px;
@@ -30,24 +39,33 @@ body {
   background: steelblue;
 }
 
-#progress {
+#controls {
   margin-top: 10px;
 }
 
-#dialog, #end {
+#controls button {
+  font-size: 20px;
+  padding: 8px 14px;
+  margin: 3px;
+}
+
+#dialog,
+#end {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.75);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 10;
 }
 
 .hidden {
   display: none;
 }
 
-#speechbubble, .endbox {
+#speechbubble,
+.endbox {
   background: white;
   color: black;
   padding: 20px;
@@ -55,20 +73,11 @@ body {
   width: 280px;
 }
 
-#controls {
-  margin-top: 10px;
-}
-
-#controls button {
-  font-size: 20px;
-  padding: 10px 20px;
-  margin: 5px;
-}
 #answer {
   width: 100%;
   padding: 8px;
-  margin-top: 10px;
   font-size: 16px;
+  margin-top: 10px;
 }
 
 #feedback {
