@@ -205,11 +205,10 @@ function updateProgress(){
         dialog.classList.add("hidden");
     }
 }
-// Endscreen auskommentiert
 // =======================
 // Spiel neustarten (vom Endscreen)
 // =======================
-/*function restartGame() {
+function restartGame() {
     endScreen.classList.add("hidden");
     startScreen.classList.remove("hidden");
 
@@ -217,7 +216,7 @@ function updateProgress(){
     document.getElementById("controls").style.display = "none";
     dialog.classList.add("hidden");
 }
-*/
+
 document.getElementById("restart-btn").onclick = () => {
     // Endscreen ausblenden
     document.getElementById("end-screen").style.display = "none";
